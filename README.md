@@ -1,130 +1,113 @@
-# 📚 Exercícios de TypeScript Avançado
+# Exercicios de TypeScript Avançado
 
-## 📝 Sumário
+## Sumario
 
-- [Exercício 1: Setup Inicial](#exercício-1-setup-inicial)
-- [Exercício 2: Configurar ESLint](#exercício-2-configurar-eslint)
-- [Exercício 3: Função Tipada](#exercício-3-função-tipada)
-- [Exercício 4: Interface e Objeto](#exercício-4-interface-e-objeto)
-- [Exercício 5: Tipos Primitivos e Estruturados](#exercício-5-tipos-primitivos-e-estruturados)
-- [Exercício 6: Interfaces e Tipos Personalizados](#exercício-6-interfaces-e-tipos-personalizados)
+- [Exercicio 1.1: Setup Inicial](#exercicio-11-setup-inicial)
+- [Exercicio 1.2: Configurar ESLint](#exercicio-12-configurar-eslint)
+- [Exercicio 2.1: Tipos Primitivos e Estruturados](#exercicio-21-tipos-primitivos-e-estruturados)
+- [Exercicio 2.2: Funcao Tipada](#exercicio-22-funcao-tipada)
+- [Exercicio 3.1: Interface e Objeto](#exercicio-31-interface-e-objeto)
+- [Exercicio 3.2: Interfaces e Tipos Personalizados](#exercicio-32-interfaces-e-tipos-personalizados)
+- [Exercicio 4.1: Generics](#exercicio-41-generics)
+- [Exercicio 5.1: API REST com Express](#exercicio-51-api-rest-com-express)
 
 ---
 
-## Exercício 1: Setup Inicial
+## Exercicio 1.1: Setup Inicial
 
 ### Objetivo
 
 Criar um projeto com:
 
-- ✅ TypeScript instalado
-- ✅ tsconfig configurado
-- ✅ src/index.ts imprimindo "Olá, TS!"
-- ✅ Rodar com `npm run dev`
+- TypeScript instalado
+- tsconfig configurado
+- src/index.ts imprimindo "Ola, TS!"
+- Rodar com `npm run dev`
 
-### Implementação
-
-```bash
-npm init -y
-npm install -D typescript ts-node
-npx tsc --init
-```
-
-### Código
+### Codigo
 
 ```typescript
-const message: string = "Olá, TS!";
+const message: string = "Ola, TS!";
 console.log(message);
 ```
 
-### Resultado
+---
 
-```
-Olá, TS!
+## Exercicio 1.2: Configurar ESLint
+
+### Objetivo
+
+- Instalar e configurar o ESLint no projeto
+- Criar um erro de lint proposital (ex: variavel nao usada)
+- Corrigir com base no feedback
+
+### Codigo
+
+```typescript
+// Variavel proposital para demonstrar erro de lint
+const unusedVariable = "teste";
 ```
 
 ---
 
-## Exercício 2: Configurar ESLint
+## Exercicio 2.1: Tipos Primitivos e Estruturados
 
 ### Objetivo
 
-- ✅ Instalar e configurar o ESLint no projeto
-- ✅ Criar um erro de lint proposital (ex: variável não usada)
-- ✅ Corrigir com base no feedback
+Declarar variaveis com tipos primitivos e estruturados.
 
-### Instalação
+### Codigo
 
-```bash
-npm install -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --legacy-peer-deps
-npx eslint --init
+```typescript
+const nomeProduto: string = "Teclado Mecanico";
+const precoProduto: number = 450.99;
+const emEstoque: boolean = true;
+
+const categoriasProduto: string[] = [
+  "Eletronicos",
+  "Perifericos",
+  "Informatica",
+];
+
+const coordenadas: [number, number] = [-23.5505, -46.6333];
+
+enum StatusPedido {
+  Pendente = "Pendente",
+  Processando = "Processando",
+  Entregue = "Entregue",
+  Cancelado = "Cancelado",
+}
 ```
-
-### Configuração
-
-- ESLint detecta erros de qualidade do código
-- Arquivo: `eslint.config.mts`
-- Suporte a TypeScript habilitado
-
-### Exemplo de Erro Detectado
-
-```
-'unusedVariable' is assigned a value but never used @typescript-eslint/no-unused-vars
-```
-
-### Como Corrigir
-
-- Remover variáveis não usadas
-- Usar `eslint --fix` para correção automática
 
 ---
 
-## Exercício 3: Função Tipada
+## Exercicio 2.2: Funcao Tipada
 
 ### Objetivo
 
-Criar uma função que receba nome e idade e retorne uma mensagem de boas-vindas, com tipagem adequada nos parâmetros e no retorno.
+Criar funcoes com tipagem adequada nos parametros e no retorno.
 
-### Especificações
-
-- ✅ Crie a função `saudar`
-- ✅ Tipar os parâmetros: `nome` (string) e `idade` (number)
-- ✅ Tipar o retorno da função como string
-
-### Código
+### Codigo
 
 ```typescript
 function saudar(nome: string, idade: number): string {
-  return `Bem-vindo, ${nome}! Você tem ${idade} anos.`;
+  return `Bem-vindo, ${nome}! Voce tem ${idade} anos.`;
 }
 
-const resultado: string = saudar("Darci", 25);
-console.log(resultado);
-```
-
-### Resultado
-
-```
-Bem-vindo, Darci! Você tem 25 anos.
+function formatarProduto(nome: string, preco: number): string {
+  return `O produto ${nome} custa R$ ${preco.toFixed(2)}`;
+}
 ```
 
 ---
 
-## Exercício 4: Interface e Objeto
+## Exercicio 3.1: Interface e Objeto
 
 ### Objetivo
 
 Criar uma interface para um produto e instanciar um objeto com base nela.
 
-### Especificações
-
-- ✅ Defina a interface `Produto` com:
-  - `nome` (string)
-  - `preco` (number)
-  - `emEstoque` (boolean)
-- ✅ Crie uma variável `meuProduto` do tipo `Produto` e atribua um valor
-
-### Código
+### Codigo
 
 ```typescript
 interface Produto {
@@ -140,119 +123,19 @@ const meuProduto: Produto = {
 };
 ```
 
-### Resultado
-
-```
-Dados do Produto:
-Nome: Notebook
-Preço: R$ 3500
-Em Estoque: Sim
-```
-
 ---
 
-## Exercício 5: Tipos Primitivos e Estruturados
+## Exercicio 3.2: Interfaces e Tipos Personalizados
 
 ### Objetivo
 
-Declarar variáveis com tipos primitivos e estruturados, incluindo array, tupla e enum.
+Criar interfaces avancadas com tipos personalizados e heranca de interfaces.
 
-### Especificações
-
-- ✅ String para nome do produto
-- ✅ Number para preço do produto
-- ✅ Boolean indicando se está em estoque
-- ✅ Array de strings para categorias
-- ✅ Tupla para coordenadas (latitude e longitude)
-- ✅ Enum para status de pedido
-- ✅ Função que aceite esses tipos como parâmetros
-
-### Código
-
-#### Tipos Primitivos
-
-```typescript
-const nomeProduto: string = "Teclado Mecânico";
-const precoProduto: number = 450.99;
-const emEstoque5: boolean = true;
-```
-
-#### Array
-
-```typescript
-const categoriasProduto: string[] = [
-  "Eletrônicos",
-  "Periféricos",
-  "Informática",
-];
-```
-
-#### Tupla
-
-```typescript
-const coordenadas: [number, number] = [-23.5505, -46.6333];
-```
-
-#### Enum
-
-```typescript
-enum StatusPedido {
-  Pendente = "Pendente",
-  Processando = "Processando",
-  Entregue = "Entregue",
-  Cancelado = "Cancelado",
-}
-```
-
-#### Função Tipada
-
-```typescript
-function formatarProduto(nome: string, preco: number): string {
-  return `O produto ${nome} custa R$ ${preco.toFixed(2)}`;
-}
-```
-
-### Resultado
-
-```
-Dados Tipados:
-Nome: Teclado Mecânico
-Preço: R$ 450.99
-Em Estoque: Sim
-Categorias: Eletrônicos, Periféricos, Informática
-Coordenadas: Lat -23.5505, Long -46.6333
-Status de Pedido (exemplo): Entregue
-Mensagem Formatada: O produto Teclado Mecânico custa R$ 450.99
-```
-
----
-
-## Exercício 6: Interfaces e Tipos Personalizados
-
-### Objetivo
-
-Criar interfaces avançadas com tipos personalizados e herança de interfaces.
-
-### Especificações
-
-- ✅ Interface `IUser` com: `id` (number), `name` (string), `email` (string), `isActive` (boolean)
-- ✅ Interface `IProduct` com: `id` (number), `name` (string), `price` (number), `inStock` (boolean), `categories` (array de strings)
-- ✅ Type Alias `UserRole` que possa ser `'admin'` ou `'user'`
-- ✅ Interface `IAdminUser` que estenda `IUser` e adicione `role` do tipo `UserRole`
-- ✅ Instâncias de `IUser`, `IProduct` e `IAdminUser`
-- ✅ Funções que recebem objetos tipados e imprimem informações
-
-### Código
-
-#### Type Alias
+### Codigo
 
 ```typescript
 type UserRole = "admin" | "user";
-```
 
-#### Interfaces
-
-```typescript
 interface IUser {
   id: number;
   name: string;
@@ -271,103 +154,106 @@ interface IProduct {
 interface IAdminUser extends IUser {
   role: UserRole;
 }
-```
 
-#### Funções
-
-```typescript
 function imprimirUsuario(user: IUser): void {
   console.log(`ID: ${user.id}`);
   console.log(`Nome: ${user.name}`);
   console.log(`Email: ${user.email}`);
-  console.log(`Ativo: ${user.isActive ? "Sim" : "Não"}`);
-}
-
-function imprimirProduto(produto: IProduct): void {
-  console.log(`ID: ${produto.id}`);
-  console.log(`Nome: ${produto.name}`);
-  console.log(`Preço: R$ ${produto.price}`);
-  console.log(`Em Estoque: ${produto.inStock ? "Sim" : "Não"}`);
-  console.log(`Categorias: ${produto.categories.join(", ")}`);
+  console.log(`Ativo: ${user.isActive ? "Sim" : "Nao"}`);
 }
 ```
 
-#### Instâncias
+---
+
+## Exercicio 4.1: Generics
+
+### Objetivo
+
+Criar funcoes genericas reutilizaveis.
+
+### Codigo
 
 ```typescript
-const usuario: IUser = {
-  id: 1,
-  name: "João Silva",
-  email: "joao@example.com",
-  isActive: true,
-};
+function getData<T>(items: T[]): T[] {
+  return items;
+}
 
-const produto: IProduct = {
-  id: 101,
-  name: "Notebook Dell",
-  price: 3500.0,
-  inStock: true,
-  categories: ["Eletrônicos", "Computadores", "Notebooks"],
-};
+function getById<T extends { id: number }>(items: T[], id: number): T | undefined {
+  return items.find((item) => item.id === id);
+}
 
-const adminUser: IAdminUser = {
-  id: 2,
-  name: "Maria Santos",
-  email: "maria@admin.com",
-  isActive: true,
-  role: "admin",
-};
-```
-
-### Resultado
-
-```
---- Informações do Usuário Comum ---
-ID: 1
-Nome: João Silva
-Email: joao@example.com
-Ativo: Sim
-
---- Informações do Produto ---
-ID: 101
-Nome: Notebook Dell
-Preço: R$ 3500
-Em Estoque: Sim
-Categorias: Eletrônicos, Computadores, Notebooks
-
---- Informações do Usuário Admin ---
-ID: 2
-Nome: Maria Santos
-Email: maria@admin.com
-Ativo: Sim
-Role: admin
+const nomes: string[] = getData(["Alice", "Bob", "Charlie"]);
+const numeros: number[] = getData([10, 20, 30]);
 ```
 
 ---
 
-## 🎯 Conceitos Abordados
+## Exercicio 5.1: API REST com Express
 
-| Exercício | Conceitos                                        |
-| --------- | ------------------------------------------------ |
-| 1         | Setup TypeScript, npm scripts                    |
-| 2         | ESLint, linting, qualidade de código             |
-| 3         | Funções tipadas, parâmetros e retorno            |
-| 4         | Interfaces, objetos, instanciação                |
-| 5         | Tipos primitivos, arrays, tuplas, enums          |
-| 6         | Herança de interfaces, type aliases, union types |
+### Objetivo
 
----
+Construir uma API REST basica com Express e TypeScript.
 
-## 🚀 Como Executar
+### Rotas
+
+- `GET /users` - Retorna todos os usuarios
+- `GET /users/:id` - Retorna usuario pelo ID
+- `POST /users` - Adiciona novo usuario
+- `PUT /users/:id` - Atualiza usuario existente
+- `DELETE /users/:id` - Remove usuario
+
+### Como Testar
 
 ```bash
-# Instalar dependências
+# Iniciar servidor
+npm run server
+
+# Listar usuarios
+curl http://localhost:3000/users
+
+# Buscar por ID
+curl http://localhost:3000/users/1
+
+# Criar usuario
+curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d '{"name":"Lucia","email":"lucia@test.com","isActive":true}'
+
+# Atualizar usuario
+curl -X PUT http://localhost:3000/users/1 -H "Content-Type: application/json" -d '{"name":"Joao Alterado","email":"joao@test.com","isActive":false}'
+
+# Remover usuario
+curl -X DELETE http://localhost:3000/users/2
+```
+
+---
+
+## Conceitos Abordados
+
+| Exercicio | Conceitos                                           |
+| --------- | --------------------------------------------------- |
+| 1.1       | Setup TypeScript, npm scripts                       |
+| 1.2       | ESLint, linting, qualidade de codigo                |
+| 2.1       | Tipos primitivos, arrays, tuplas, enums             |
+| 2.2       | Funcoes tipadas, parametros e retorno               |
+| 3.1       | Interfaces, objetos, instanciação                   |
+| 3.2       | Heranca de interfaces, type aliases, union types    |
+| 4.1       | Generics, constraints, reutilizacao de tipos        |
+| 5.1       | API REST, Express, rotas HTTP, validacao            |
+
+---
+
+## Como Executar
+
+```bash
+# Instalar dependencias
 npm install
 
-# Rodar o projeto
+# Rodar os exercicios
 npm run dev
 
-# Verificar qualidade do código
+# Rodar a API REST
+npm run server
+
+# Verificar qualidade do codigo
 npx eslint src/
 
 # Corrigir automaticamente
@@ -375,39 +261,45 @@ npx eslint src/ --fix
 
 # Compilar TypeScript
 npm run build
+
+# Rodar testes
+npm test
 ```
 
 ---
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
-Inicio/
+TypeScript/
 ├── src/
-│   ├── index.ts          (Arquivo principal com os 6 exercícios)
-│   └── data.ts           (Arquivo de dados reutilizáveis)
-├── dist/                 (Compilado JavaScript)
+│   ├── index.ts        (Exercicios 1.1 a 4.1)
+│   ├── server.ts       (Exercicio 5.1 - API REST)
+│   ├── types.ts        (Interfaces compartilhadas)
+│   ├── data.ts         (Dados reutilizaveis)
+│   └── data.test.ts    (Testes do data.ts)
+├── dist/               (Compilado JavaScript)
 ├── node_modules/
 ├── package.json
 ├── tsconfig.json
 ├── eslint.config.mts
-└── EXERCICIOS.md         (Este arquivo)
+└── README.md           (Este arquivo)
 ```
 
 ---
 
-## ✅ Status
+## Status
 
-- ✅ Exercício 1: Completo
-- ✅ Exercício 2: Completo
-- ✅ Exercício 3: Completo
-- ✅ Exercício 4: Completo
-- ✅ Exercício 5: Completo
-- ✅ Exercício 6: Completo
-- ⏳ Exercício 7: Aguardando
+- Exercicio 1.1: Completo
+- Exercicio 1.2: Completo
+- Exercicio 2.1: Completo
+- Exercicio 2.2: Completo
+- Exercicio 3.1: Completo
+- Exercicio 3.2: Completo
+- Exercicio 4.1: Completo
+- Exercicio 5.1: Completo
 
 ---
 
-**Criado em:** 2026-08-18  
-**Versão TypeScript:** 6.0.3  
-**Versão ESLint:** 10.8.1
+**Versao TypeScript:** 6.0.3
+**Versao ESLint:** 10.8.1
