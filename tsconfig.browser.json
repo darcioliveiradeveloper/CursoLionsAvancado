@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "lib": ["es2020", "dom", "dom.iterable"],
+    "types": [],
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "moduleDetection": "force",
+    "verbatimModuleSyntax": false,
+    "isolatedModules": true
+  },
+  "include": ["src/app.ts"]
+}

@@ -10,6 +10,7 @@
 - [Exercício 3.2: Interfaces e Tipos Personalizados](#exercício-32-interfaces-e-tipos-personalizados)
 - [Exercício 4.1: Generics](#exercício-41-generics)
 - [Exercício 5.1: API REST com Express](#exercício-51-api-rest-com-express)
+- [Exercício 6.1: Consumo de API e Filtros](#exercício-61-consumo-de-api-e-filtros)
 
 ---
 
@@ -460,6 +461,128 @@ curl -X DELETE http://localhost:3000/users/2
 
 ---
 
+## Exercício 6.1: Consumo de API e Filtros
+
+### Objetivo
+
+Consumir uma API externa, criar interfaces para os dados e implementar funcoes de pesquisa e filtro.
+
+### Especificacoes
+
+- Criar interface `ICountry` e type `Region`
+- Buscar dados de uma API externa com `fetch`
+- Implementar funcao de pesquisa por nome
+- Implementar funcao de filtro por region
+- Tratar erros com try/catch
+
+### Arquivos
+
+- `src/types.ts` — interface ICountry e type Region
+- `src/api.ts` — funcao fetchCountries()
+- `src/filters.ts` — funcoes searchByName() e filterByRegion()
+- `src/index.ts` — orquestra tudo
+
+### Codigo
+
+#### Types (src/types.ts)
+
+```typescript
+export type Region = "Africa" | "Americas" | "Asia" | "Europe" | "Oceania";
+
+export interface ICountry {
+  name: string;
+  region: string;
+  capital?: string;
+  population: number;
+  flag: string;
+}
+```
+
+#### API (src/api.ts)
+
+```typescript
+import type { ICountry } from "./types.js";
+
+const API_URL = "https://countries.dev/countries";
+
+export async function fetchCountries(): Promise<ICountry[]> {
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
+    }
+    const data: unknown = await response.json();
+    if (!Array.isArray(data)) {
+      return [];
+    }
+    return data as ICountry[];
+  } catch (error) {
+    console.error("Falha ao buscar países:", error);
+    return [];
+  }
+}
+```
+
+#### Filtros (src/filters.ts)
+
+```typescript
+import type { ICountry, Region } from "./types.js";
+
+export function searchByName(countries: ICountry[], term: string): ICountry[] {
+  const lowerTerm = term.toLowerCase();
+  return countries.filter((country) =>
+    country.name.toLowerCase().includes(lowerTerm)
+  );
+}
+
+export function filterByRegion(countries: ICountry[], region: Region): ICountry[] {
+  return countries.filter((country) => country.region === region);
+}
+```
+
+#### Principal (src/index.ts)
+
+```typescript
+import { fetchCountries } from "./api.js";
+import { searchByName, filterByRegion } from "./filters.js";
+import type { ICountry } from "./types.js";
+
+async function main(): Promise<void> {
+  const countries = await fetchCountries();
+
+  // Pesquisa por nome
+  const results = searchByName(countries, "bra");
+  console.log(`Pesquisa por "bra": ${results.length} resultado(s)`);
+
+  // Filtro por regiao
+  const europe = filterByRegion(countries, "Europe");
+  console.log(`Paises da Europa: ${europe.length} resultado(s)`);
+}
+
+main();
+```
+
+### Resultado
+
+```
+Buscando países na API...
+Total de países carregados: 250
+
+--- Pesquisa por "bra" (2 resultado(s)) ---
+  Brazil - Região: Americas
+  Gibraltar - Região: Europe
+
+--- Países da Europa (53 resultado(s)) ---
+  Åland Islands - Capital: Mariehamn
+  Albania - Capital: Tirana
+  Andorra - Capital: Andorra la Vella
+  Austria - Capital: Vienna
+  Belarus - Capital: Minsk
+  ... (mostrando apenas 5)
+```
+
+---
+
 ## Conceitos Abordados
 
 | Exercicio | Conceitos                                           |
@@ -472,6 +595,7 @@ curl -X DELETE http://localhost:3000/users/2
 | 3.2       | Heranca de interfaces, type aliases, union types    |
 | 4.1       | Generics, constraints, reutilizacao de tipos        |
 | 5.1       | API REST, Express, rotas HTTP, validacao            |
+| 6.1       | Fetch API, async/await, interfaces, filtros         |
 
 ---
 
@@ -507,9 +631,11 @@ npm test
 ```
 TypeScript/
 ├── src/
-│   ├── index.ts        (Exercicios 1.1 a 4.1)
+│   ├── index.ts        (Exercicios 1.1 a 4.1 e 6.1)
 │   ├── server.ts       (Exercicio 5.1 - API REST)
 │   ├── types.ts        (Interfaces compartilhadas)
+│   ├── api.ts          (Exercicio 6.1 - busca de API)
+│   ├── filters.ts      (Exercicio 6.1 - pesquisas e filtros)
 │   ├── data.ts         (Dados reutilizaveis)
 │   └── data.test.ts    (Testes do data.ts)
 ├── dist/               (Compilado JavaScript)
@@ -532,6 +658,7 @@ TypeScript/
 - Exercicio 3.2: Completo
 - Exercicio 4.1: Completo
 - Exercicio 5.1: Completo
+- Exercicio 6.1: Completo
 
 ---
 

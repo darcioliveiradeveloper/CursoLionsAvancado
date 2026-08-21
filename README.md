@@ -10,6 +10,7 @@
 - [Exercicio 3.2: Interfaces e Tipos Personalizados](#exercicio-32-interfaces-e-tipos-personalizados)
 - [Exercicio 4.1: Generics](#exercicio-41-generics)
 - [Exercicio 5.1: API REST com Express](#exercicio-51-api-rest-com-express)
+- [Exercicio 6.1: Consumo de API e Filtros](#exercicio-61-consumo-de-api-e-filtros)
 
 ---
 
@@ -226,6 +227,27 @@ curl -X DELETE http://localhost:3000/users/2
 
 ---
 
+## Exercicio 6.1: Consumo de API e Filtros
+
+### Objetivo
+
+Consumir uma API externa, criar interfaces para os dados e implementar funcoes de pesquisa e filtro.
+
+### Arquivos
+
+- `src/types.ts` — interface ICountry e type Region
+- `src/api.ts` — funcao fetchCountries()
+- `src/filters.ts` — funcoes searchByName() e filterByRegion()
+- `src/index.ts` — orquestra tudo
+
+### Como Executar
+
+```bash
+npm run dev
+```
+
+---
+
 ## Conceitos Abordados
 
 | Exercicio | Conceitos                                           |
@@ -238,6 +260,7 @@ curl -X DELETE http://localhost:3000/users/2
 | 3.2       | Heranca de interfaces, type aliases, union types    |
 | 4.1       | Generics, constraints, reutilizacao de tipos        |
 | 5.1       | API REST, Express, rotas HTTP, validacao            |
+| 6.1       | Fetch API, async/await, interfaces, filtros         |
 
 ---
 
@@ -273,9 +296,11 @@ npm test
 ```
 TypeScript/
 ├── src/
-│   ├── index.ts        (Exercicios 1.1 a 4.1)
+│   ├── index.ts        (Exercicios 1.1 a 4.1 e 6.1)
 │   ├── server.ts       (Exercicio 5.1 - API REST)
 │   ├── types.ts        (Interfaces compartilhadas)
+│   ├── api.ts          (Exercicio 6.1 - busca de API)
+│   ├── filters.ts      (Exercicio 6.1 - pesquisas e filtros)
 │   ├── data.ts         (Dados reutilizaveis)
 │   └── data.test.ts    (Testes do data.ts)
 ├── dist/               (Compilado JavaScript)
@@ -298,6 +323,7 @@ TypeScript/
 - Exercicio 3.2: Completo
 - Exercicio 4.1: Completo
 - Exercicio 5.1: Completo
+- Exercicio 6.1: Completo
 
 ---
 

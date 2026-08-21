@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercicio 6.1 - Paises</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 20px; }
+    h1 { text-align: center; margin-bottom: 20px; color: #333; }
+    .filters { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+    input { padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; width: 250px; }
+    select { padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; width: 180px; }
+    button { padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; font-size: 14px; cursor: pointer; }
+    button:hover { background: #2980b9; }
+    .info { text-align: center; margin-bottom: 15px; color: #666; }
+    .countries { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
+    .country { background: #fff; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .country h3 { font-size: 16px; margin-bottom: 8px; color: #333; }
+    .country p { font-size: 13px; color: #666; margin-bottom: 4px; }
+    .country .flag { font-size: 32px; margin-bottom: 8px; }
+    .loading { text-align: center; padding: 40px; color: #666; }
+    .error { text-align: center; padding: 40px; color: #e74c3c; }
+  </style>
+</head>
+<body>
+  <h1>Exercicio 6.1 - Consumo de API e Filtros</h1>
+
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="Digite o nome do pais...">
+    <select id="regionSelect">
+      <option value="">Todas as regioes</option>
+      <option value="Africa">Africa</option>
+      <option value="Americas">Americas</option>
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europa</option>
+      <option value="Oceania">Oceania</option>
+    </select>
+    <button id="searchBtn">Pesquisar</button>
+    <button id="clearBtn">Limpar</button>
+  </div>
+
+  <div class="info" id="info"></div>
+  <div id="countries" class="countries">
+    <div class="loading">Carregando paises...</div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

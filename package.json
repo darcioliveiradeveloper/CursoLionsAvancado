@@ -7,6 +7,7 @@
     "dev": "tsx src/index.ts",
     "server": "tsx src/server.ts",
     "build": "tsc",
+    "build:browser": "tsc --project tsconfig.browser.json && copy dist\\app.js public\\app.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },
