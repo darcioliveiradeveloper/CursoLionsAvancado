@@ -1,6 +1,8 @@
 node_modules/
 dist/
+eslint.config.d.*
 *.tsbuildinfo
+*.map
 .env
 .env.*
 !.env.example
