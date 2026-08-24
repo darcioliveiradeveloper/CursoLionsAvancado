@@ -8,6 +8,7 @@ interface ICountry {
   capital?: string;
   population: number;
   flag: string;
+  flags: { png: string; svg: string };
 }
 
 // ========== API ==========
@@ -69,7 +70,7 @@ function renderCountries(countries: ICountry[]): void {
     .map(
       (country) => `
     <div class="country">
-      <div class="flag">${country.flag}</div>
+      <img class="flag" src="${country.flags.png}" alt="Bandeira de ${country.name}" width="80" height="50">
       <h3>${country.name}</h3>
       <p><strong>Regiao:</strong> ${country.region}</p>
       <p><strong>Capital:</strong> ${country.capital ?? "N/A"}</p>
