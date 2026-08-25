@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx src/index.ts",
-    "server": "tsx src/server.ts",
+    "ex1": "tsx Exercicio1/index.ts",
+    "ex2": "tsx Exercicio2/index.ts",
+    "ex3": "tsx Exercicio3/index.ts",
+    "ex4": "tsx Exercicio4/index.ts",
+    "server": "tsx Exercicio5/server.ts",
+    "ex6": "tsc Exercicio6/public/app.ts --ignoreConfig --target es2020 --module es2020 --moduleResolution bundler --outDir Exercicio6/public --lib es2020,dom --skipLibCheck --strict && npx serve Exercicio6/public",
     "build": "tsc",
-    "build:browser": "tsc --project tsconfig.browser.json && copy dist\\app.js public\\app.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },

@@ -4,6 +4,10 @@ import type { ICountry } from "./types.js";
 
 // ========== EXERCÍCIO 6.1: CONSUMO DE API E FILTROS ==========
 
+function getNamePt(country: ICountry): string {
+  return country.translations?.pt ?? country.name;
+}
+
 async function main(): Promise<void> {
   console.log("\n========== EXERCÍCIO 6.1: Consumo de API ==========");
 
@@ -22,14 +26,14 @@ async function main(): Promise<void> {
   const searchResults: ICountry[] = searchByName(countries, searchTerm);
   console.log(`\n--- Pesquisa por "${searchTerm}" (${searchResults.length} resultado(s)) ---`);
   searchResults.forEach((c) => {
-    console.log(`  ${c.name} - Região: ${c.region}`);
+    console.log(`  ${getNamePt(c)} - Região: ${c.region}`);
   });
 
   // Filtro por região
   const regionFilter: ICountry[] = filterByRegion(countries, "Europe");
   console.log(`\n--- Países da Europa (${regionFilter.length} resultado(s)) ---`);
   regionFilter.slice(0, 5).forEach((c) => {
-    console.log(`  ${c.name} - Capital: ${c.capital ?? "N/A"}`);
+    console.log(`  ${getNamePt(c)} - Capital: ${c.capital ?? "N/A"}`);
   });
   console.log("  ... (mostrando apenas 5)");
 

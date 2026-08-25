@@ -7,7 +7,8 @@ interface ICountry {
   region: string;
   capital?: string;
   population: number;
-  flag: string;
+  alpha2Code: string;
+  translations: { pt: string };
   flags: { png: string; svg: string };
 }
 
@@ -37,12 +38,22 @@ async function fetchCountries(): Promise<ICountry[]> {
   }
 }
 
+// ========== HELPERS ==========
+
+function getFlagUrl(country: ICountry): string {
+  return `https://flagcdn.com/w320/${country.alpha2Code.toLowerCase()}.png`;
+}
+
+function getNamePt(country: ICountry): string {
+  return country.translations?.pt ?? country.name;
+}
+
 // ========== FILTROS ==========
 
 function searchByName(countries: ICountry[], term: string): ICountry[] {
   const lowerTerm: string = term.toLowerCase();
   return countries.filter((country) =>
-    country.name.toLowerCase().includes(lowerTerm)
+    getNamePt(country).toLowerCase().includes(lowerTerm)
   );
 }
 
@@ -70,8 +81,8 @@ function renderCountries(countries: ICountry[]): void {
     .map(
       (country) => `
     <div class="country">
-      <img class="flag" src="${country.flags.png}" alt="Bandeira de ${country.name}" width="80" height="50">
-      <h3>${country.name}</h3>
+      <img class="flag" src="${getFlagUrl(country)}" alt="Bandeira de ${getNamePt(country)}" width="80" height="50">
+      <h3>${getNamePt(country)}</h3>
       <p><strong>Regiao:</strong> ${country.region}</p>
       <p><strong>Capital:</strong> ${country.capital ?? "N/A"}</p>
       <p><strong>Populacao:</strong> ${country.population.toLocaleString("pt-BR")}</p>

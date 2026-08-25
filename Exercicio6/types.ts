@@ -5,6 +5,7 @@ export interface ICountry {
   region: string;
   capital?: string;
   population: number;
-  flag: string;
+  alpha2Code: string;
+  translations: { pt: string };
   flags: { png: string; svg: string };
 }

@@ -1,6 +1,8 @@
 node_modules/
 dist/
 eslint.config.d.*
+eslint.config.mjs
+Exercicio6/public/app.js
 *.tsbuildinfo
 *.map
 .env
