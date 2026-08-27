@@ -5,6 +5,8 @@ eslint.config.mjs
 Exercicio6/public/app.js
 *.tsbuildinfo
 *.map
+*.log
+.hintrc
 .env
 .env.*
 !.env.example
