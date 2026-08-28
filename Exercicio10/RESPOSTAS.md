@@ -11,7 +11,16 @@
   aplicação. Exemplo: `price < 0` ou `name.trim().length < 3`.
 
 Importante: `typeof NaN === "number"` — o NaN passa na validação de tipo, então
-a regra de negócio precisa checá-lo explicitamente (`Number.isNaN`).
+a regra de negócio precisa checá-lo explicitamente (`Number.isNaN`). Convenção
+JSON: `JSON.stringify(NaN)` vira `null`, então o NaN normalmente nem chega pela
+HTTP — mas a defesa existe na API (`POST` com `price: null` -> 400) e para
+chamadas diretas ao serviço.
+
+### 1.1 O preço zero é aceito?
+
+**Sim.** A regra é `price >= 0` — zero é um preço válido (produto gratuito).
+Testado: `POST /products` com `price: 0` -> **201**. Apenas valores negativos e
+`NaN` são rejeitados.
 
 ### 2. Onde as regras de nome e preço devem ser verificadas?
 
@@ -56,7 +65,8 @@ buscá-lo depois deve retornar 404.
 ## Cenário de execução testado
 
 - Servidor iniciado com `npm run ex10` (rota de log do Exercício 7 registrando tudo).
-- `POST /products` válido -> **201** e id gerado pela aplicação (`4`).
+- `POST /products` válido -> **201** e id gerado pela aplicação (`4`), inclusive
+  com **`price: 0`** (aceito, produto gratuito).
 - `POST` com nome `AB`, nome `"   "`, preço `-5`, preço texto, `inStock` texto,
   `categories` fora do formato e corpo sem todos os campos -> **400**.
 - `GET /products/1`, `PUT` parcial `{ price }` e `PUT` parcial `{ name }` -> **200**.

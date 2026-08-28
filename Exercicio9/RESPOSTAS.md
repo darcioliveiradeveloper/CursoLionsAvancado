@@ -23,6 +23,29 @@ ausente). O erro inesperado (não `AppError`) fica com o middleware, que respond
 500. Assim, a regra de "qual status para qual situação" fica explícita e
 próxima do erro, sem repetição.
 
+### (Preparação) Que dados formam `IProduct` no Exercício 3?
+
+`IProduct` é composto por:
+
+```ts
+interface IProduct {
+  id: number;          // identificador único do produto
+  name: string;        // nome do produto
+  price: number;       // preço (número, não texto)
+  inStock: boolean;    // está disponível em estoque?
+  categories: string[]; // categorias às quais o produto pertence
+}
+```
+
+Esse modelo é reutilizado no Exercício 10 para o CRUD de produtos.
+
+### (Preparação) Onde as regras de nome e preço devem ser verificadas?
+
+No **serviço** (`ProductService`, Exercício 10) — camada responsável por aplicar
+as regras de negócio — e não na rota, que deve se limitar ao HTTP. Dessa forma a
+mesma validação vale para `create` e `update`. Detalhado no `RESPOSTAS.md` do
+Exercício 10.
+
 ## Decisões do AppError
 
 ### 3. Qual status usar para validação inválida: 400 ou 422? Escolha e justifique.
@@ -110,3 +133,18 @@ todas as respostas de erro seguem o mesmo formato `{ message }`, os status
 refletem a natureza do problema (400/404 esperados, 500 inesperado) e as rotas
 ficam livres de repetição. A manutenção vira ponto único e o comportamento fica
 previsível para o cliente.
+
+## Evidência da execução
+
+Servidor iniciado com rotas temporárias de teste para validar o middleware:
+
+| Requisição                              | Comportamento esperado           | Observado            |
+| --------------------------------------- | -------------------------------- | -------------------- |
+| Rota que lança `AppError`               | 400 com `{ message }`            | 400 `{ message }`    |
+| Rota que lança `Error` comum            | 500 genérico (sem stack)         | 500 `{ message }`    |
+| Requisição imediatamente após o erro    | Servidor continua respondendo    | 200 OK               |
+
+Após os testes, as rotas temporárias foram **removidas** e a API voltou a
+comportamento normal (`GET/POST/PUT/DELETE /users` respondendo com o formato de
+erro centralizado, ex: usuário inexistente -> 404, corpo inválido -> 400).
+Conferido também com `npx tsc --noEmit` e `npx eslint Exercicio9` sem erros.
