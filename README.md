@@ -11,6 +11,10 @@
 - [Exercicio 4.1: Generics](#exercicio-41-generics)
 - [Exercicio 5.1: API REST com Express](#exercicio-51-api-rest-com-express)
 - [Exercicio 6.1: Consumo de API e Filtros](#exercicio-61-consumo-de-api-e-filtros)
+- [Exercicio 7: Middleware com Tipagem](#exercicio-7-middleware-com-tipagem)
+- [Exercicio 8: Classe UserService](#exercicio-8-classe-userservice)
+- [Exercicio 9: Erros Tipados (AppError)](#exercicio-9-erros-tipados-apperror)
+- [Exercicio 10: CRUD de Produtos](#exercicio-10-crud-de-produtos)
 
 ---
 
@@ -235,15 +239,115 @@ Consumir uma API externa, criar interfaces para os dados e implementar funcoes d
 
 ### Arquivos
 
-- `src/types.ts` — interface ICountry e type Region
-- `src/api.ts` — funcao fetchCountries()
-- `src/filters.ts` — funcoes searchByName() e filterByRegion()
-- `src/index.ts` — orquestra tudo
+- `types.ts` — interface ICountry (com nome em PT-BR via translations.pt) e Region
+- `api.ts` — funcao fetchCountries()
+- `filters.ts` — funcoes searchByName() e filterByRegion()
+- `public/app.ts` — frontend que exibe as bandeiras via flagcdn
 
 ### Como Executar
 
 ```bash
-npm run dev
+npm run ex6
+```
+
+---
+
+## Exercicio 7: Middleware com Tipagem
+
+### Objetivo
+
+Criar um middleware com a tipagem do Express `(req: Request, res: Response, next: NextFunction)` que registra cada requisicao e libera o fluxo com next().
+
+### Arquivos
+
+- `middlewares/logger.middleware.ts` — funcao loggerMiddleware tipada
+- `server.ts` — middleware registrado com app.use antes das rotas
+
+### Rotas
+
+- `GET /users` - Retorna todos os usuarios
+- `GET /users/:id` - Retorna usuario pelo ID
+- `POST /users` - Adiciona novo usuario
+- `PUT /users/:id` - Atualiza usuario existente
+- `DELETE /users/:id` - Remove usuario
+
+### Como Executar
+
+```bash
+npm run ex7
+```
+
+---
+
+## Exercicio 8: Classe UserService
+
+### Objetivo
+
+Centralizar o CRUD de usuarios em uma classe com lista privada. A rota cuida do HTTP; o servico manipula os dados.
+
+### Arquivos
+
+- `services/user.service.ts` — classe UserService (getAll, getById, create, update com Partial, delete)
+- `server.ts` — rotas usam apenas o servico e validam o corpo em runtime
+
+### Como Executar
+
+```bash
+npm run ex8
+```
+
+---
+
+## Exercicio 9: Erros Tipados (AppError)
+
+### Objetivo
+
+Distinguir erro esperado da aplicacao de erro inesperado, com um AppError que transporta o codigo HTTP e um middleware global de erros.
+
+### Arquivos
+
+- `errors/app.error.ts` — classe AppError extends Error com statusCode public readonly
+- `middlewares/error.middleware.ts` — middleware global com ErrorRequestHandler (4 parametros), registrado depois das rotas
+- `server.ts` — rotas lancam AppError em vez de espalhar res.status()
+
+### Comportamento
+
+- Instancia de AppError -> responde com statusCode e message
+- Erro inesperado -> 500 com mensagem generica (sem stack trace)
+
+### Como Executar
+
+```bash
+npm run ex9
+```
+
+---
+
+## Exercicio 10: CRUD de Produtos
+
+### Objetivo
+
+Aplicar regras de negocio e validacao em runtime no CRUD de produtos, com a rota cuidando apenas do HTTP e o ProductService das regras.
+
+### Regras de negocio
+
+- Nome precisa ter no minimo 3 caracteres (apos trim)
+- Preco nao pode ser negativo nem NaN (zero e aceito)
+- ID gerado pela aplicacao, nunca pelo cliente
+- PUT pode atualizar apenas os campos enviados
+
+### Rotas
+
+- `GET /products` - Lista todos os produtos
+- `GET /products/:id` - Busca um produto pelo ID
+- `POST /products` - Cria um produto valido (201)
+- `PUT /products/:id` - Atualiza um produto existente
+- `DELETE /products/:id` - Remove um produto (204)
+
+### Como Executar
+
+```bash
+npm run ex10
 ```
 
 ---
@@ -261,6 +365,10 @@ npm run dev
 | 4.1       | Generics, constraints, reutilizacao de tipos        |
 | 5.1       | API REST, Express, rotas HTTP, validacao            |
 | 6.1       | Fetch API, async/await, interfaces, filtros         |
+| 7         | Middleware Express, tipagem (req, res, next)        |
+| 8         | Classes, encapsulamento, camada de servico, Partial |
+| 9         | Erros esperados vs inesperados, AppError, ErrorRequestHandler |
+| 10        | Regras de negocio, validacao em runtime, CRUD       |
 
 ---
 
@@ -270,17 +378,26 @@ npm run dev
 # Instalar dependencias
 npm install
 
-# Rodar os exercicios
-npm run dev
+# Rodar os exercicios 1 a 4
+npm run ex1
+npm run ex2
+npm run ex3
+npm run ex4
 
-# Rodar a API REST
+# Rodar a API REST do Exercicio 5
 npm run server
 
-# Verificar qualidade do codigo
-npx eslint src/
+# Rodar o frontend do Exercicio 6 (compila e abre a pagina)
+npm run ex6
 
-# Corrigir automaticamente
-npx eslint src/ --fix
+# Rodar os servidores dos exercicios 7 a 10
+npm run ex7
+npm run ex8
+npm run ex9
+npm run ex10
+
+# Verificar qualidade do codigo
+npx eslint Exercicio1 Exercicio2 Exercicio3 Exercicio4 Exercicio5 Exercicio6 Exercicio7 Exercicio8 Exercicio9 Exercicio10
 
 # Compilar TypeScript
 npm run build
@@ -295,20 +412,21 @@ npm test
 
 ```
 TypeScript/
-├── src/
-│   ├── index.ts        (Exercicios 1.1 a 4.1 e 6.1)
-│   ├── server.ts       (Exercicio 5.1 - API REST)
-│   ├── types.ts        (Interfaces compartilhadas)
-│   ├── api.ts          (Exercicio 6.1 - busca de API)
-│   ├── filters.ts      (Exercicio 6.1 - pesquisas e filtros)
-│   ├── data.ts         (Dados reutilizaveis)
-│   └── data.test.ts    (Testes do data.ts)
-├── dist/               (Compilado JavaScript)
+├── Exercicio1/              (Setup TypeScript + ESLint)
+├── Exercicio2/              (Tipos primitivos e funcoes tipadas)
+├── Exercicio3/              (Interfaces e tipos personalizados)
+├── Exercicio4/              (Generics)
+├── Exercicio5/              (API REST com Express - /users)
+├── Exercicio6/              (Consumo de API e filtros + frontend)
+├── Exercicio7/              (Middleware com tipagem)
+├── Exercicio8/              (Classe UserService)
+├── Exercicio9/              (AppError e middleware global de erros)
+├── Exercicio10/             (CRUD de produtos)
 ├── node_modules/
 ├── package.json
 ├── tsconfig.json
 ├── eslint.config.mts
-└── README.md           (Este arquivo)
+└── README.md                (Este arquivo)
 ```
 
 ---
@@ -324,6 +442,10 @@ TypeScript/
 - Exercicio 4.1: Completo
 - Exercicio 5.1: Completo
 - Exercicio 6.1: Completo
+- Exercicio 7: Completo
+- Exercicio 8: Completo
+- Exercicio 9: Completo
+- Exercicio 10: Completo
 
 ---
 
