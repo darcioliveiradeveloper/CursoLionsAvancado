@@ -73,6 +73,9 @@ buscá-lo depois deve retornar 404.
 - `PUT` com id inexistente -> **404**; `PUT` sem campos -> **400**.
 - `DELETE /products/1` -> **204** e `GET /products/1` depois -> **404**.
 - `GET /products/999` -> **404**; `GET /products/abc` -> **400**.
+- Rota temporária que lança `Error` comum -> **500** `{ "message": "Erro interno do
+  servidor" }` (sem stack trace) e o servidor continuou respondendo (200) em
+  seguida. A rota temporária foi removida antes da entrega.
 - `npx tsc --noEmit` e `npx eslint Exercicio10` sem erros.
 
 ## Conclusão — por que centralizar erros melhora a API?
