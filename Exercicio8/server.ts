@@ -24,6 +24,21 @@ function isValidUser(body: Record<string, unknown>): body is Omit<IUser, "id"> {
   );
 }
 
+// Valida corpo de atualização parcial: aceita um ou mais campos de IUser
+// (ex: somente name, somente email, etc.) — tipos corretos quando presentes.
+function isValidPartialUser(body: Record<string, unknown>): body is Partial<IUser> {
+  const hasName: boolean = "name" in body && typeof body.name === "string";
+  const hasEmail: boolean = "email" in body && typeof body.email === "string";
+  const hasIsActive: boolean = "isActive" in body && typeof body.isActive === "boolean";
+
+  const allFieldsValid: boolean =
+    (!("name" in body) || hasName) &&
+    (!("email" in body) || hasEmail) &&
+    (!("isActive" in body) || hasIsActive);
+
+  return allFieldsValid && (hasName || hasEmail || hasIsActive);
+}
+
 // ========== ROTAS ==========
 
 // GET /users - Retorna todos os usuários
@@ -57,13 +72,13 @@ app.post("/users", (req: Request, res: Response): void => {
   res.status(201).json(newUser);
 });
 
-// PUT /users/:id - Atualiza um usuário existente
+// PUT /users/:id - Atualiza um usuário existente (aceita atualização parcial)
 app.put("/users/:id", (req: Request, res: Response): void => {
   const id: number = Number(req.params.id);
 
-  if (!isValidUser(req.body)) {
+  if (!isValidPartialUser(req.body)) {
     res.status(400).json({
-      error: "Dados inválidos. Envie: { name: string, email: string, isActive: boolean }",
+      error: "Dados inválidos. Envie ao menos um campo: { name?, email?, isActive? }",
     });
     return;
   }
