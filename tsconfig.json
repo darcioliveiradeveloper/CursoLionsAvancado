@@ -41,5 +41,5 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["Exercicio1/**/*.ts", "Exercicio2/**/*.ts", "Exercicio3/**/*.ts", "Exercicio4/**/*.ts", "Exercicio5/**/*.ts", "Exercicio6/**/*.ts", "Exercicio7/**/*.ts", "Exercicio8/**/*.ts", "Exercicio9/**/*.ts"]
+  "include": ["Exercicio1/**/*.ts", "Exercicio2/**/*.ts", "Exercicio3/**/*.ts", "Exercicio4/**/*.ts", "Exercicio5/**/*.ts", "Exercicio6/**/*.ts", "Exercicio7/**/*.ts", "Exercicio8/**/*.ts", "Exercicio9/**/*.ts", "Exercicio10/**/*.ts"]
 }
