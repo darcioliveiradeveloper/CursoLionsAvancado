@@ -12,6 +12,7 @@
     "ex6": "tsc Exercicio6/public/app.ts --ignoreConfig --target es2020 --module es2020 --moduleResolution bundler --outDir Exercicio6/public --lib es2020,dom --skipLibCheck --strict && npx serve Exercicio6/public",
     "ex7": "tsx Exercicio7/server.ts",
     "ex8": "tsx Exercicio8/server.ts",
+    "ex9": "tsx Exercicio9/server.ts",
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest"
