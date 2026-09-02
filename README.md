@@ -15,6 +15,7 @@
 - [Exercicio 8: Classe UserService](#exercicio-8-classe-userservice)
 - [Exercicio 9: Erros Tipados (AppError)](#exercicio-9-erros-tipados-apperror)
 - [Exercicio 10: CRUD de Produtos](#exercicio-10-crud-de-produtos)
+- [Exercicio 11 e 12: RequestHandler e Repository](#exercicio-11-e-12-requesthandler-e-repository)
 
 ---
 
@@ -352,6 +353,34 @@ npm run ex10
 
 ---
 
+## Exercicio 11 e 12: RequestHandler e Repository
+
+### Objetivo
+
+Tipar params, resposta, body e query de cada rota com `RequestHandler<Params, ResBody, ReqBody, Query>` e introduzir o Repository como abstracao de persistencia em arquivo JSON. A ordem dos genericos importa: invertidos, o contrato fica incorreto.
+
+### Arquivos
+
+- `types.ts` — IUser, IProduct e contratos das rotas (IdParams, CreateBody, UpdateBody, DeleteUserResponse, EmptyParams, EmptyQuery)
+- `repositories/` — IUserRepository e IProductRepository (metodos com Promise); UserRepository e ProductRepository gravam em `data/*.json`
+- `services/` — UserService e ProductService com injeção de dependencia (recebem o repository, nao o criam)
+- `data/users.json` e `data/products.json` — persistencia real (dados sobrevivem ao restart)
+- `server.ts` — handlers declarados separadamente e tipados com RequestHandler; composicao das dependencias feita uma vez na inicializacao
+
+### Regras mantidas
+
+- Regras de negocio e validacao em runtime continuam no Service (nome 3+, preco >= 0)
+- Repository gera o ID, esconde o JSON/fs.promises e NAO decide status HTTP
+- Repository/Service nao conhecem req/res nem detalhes do arquivo
+
+### Como Executar
+
+```bash
+npm run ex11-12
+```
+
+---
+
 ## Conceitos Abordados
 
 | Exercicio | Conceitos                                           |
@@ -369,6 +398,7 @@ npm run ex10
 | 8         | Classes, encapsulamento, camada de servico, Partial |
 | 9         | Erros esperados vs inesperados, AppError, ErrorRequestHandler |
 | 10        | Regras de negocio, validacao em runtime, CRUD       |
+| 11 e 12   | RequestHandler tipado, repository, persistencia JSON, injeção de dependencia |
 
 ---
 
@@ -390,20 +420,18 @@ npm run server
 # Rodar o frontend do Exercicio 6 (compila e abre a pagina)
 npm run ex6
 
-# Rodar os servidores dos exercicios 7 a 10
+# Rodar os servidores dos exercicios 7 a 12
 npm run ex7
 npm run ex8
 npm run ex9
 npm run ex10
+npm run ex11-12
 
 # Verificar qualidade do codigo
-npx eslint Exercicio1 Exercicio2 Exercicio3 Exercicio4 Exercicio5 Exercicio6 Exercicio7 Exercicio8 Exercicio9 Exercicio10
+npx eslint Exercicio1 Exercicio2 Exercicio3 Exercicio4 Exercicio5 Exercicio6 Exercicio7 Exercicio8 Exercicio9 Exercicio10 Exercicio11-12
 
 # Compilar TypeScript
 npm run build
-
-# Rodar testes
-npm test
 ```
 
 ---
@@ -422,6 +450,7 @@ TypeScript/
 ├── Exercicio8/              (Classe UserService)
 ├── Exercicio9/              (AppError e middleware global de erros)
 ├── Exercicio10/             (CRUD de produtos)
+├── Exercicio11-12/          (RequestHandler tipado + Repository JSON)
 ├── node_modules/
 ├── package.json
 ├── tsconfig.json
@@ -446,6 +475,7 @@ TypeScript/
 - Exercicio 8: Completo
 - Exercicio 9: Completo
 - Exercicio 10: Completo
+- Exercicio 11 e 12: Completo
 
 ---
 
