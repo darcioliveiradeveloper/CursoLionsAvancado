@@ -14,6 +14,7 @@
     "ex8": "tsx Exercicio8/server.ts",
     "ex9": "tsx Exercicio9/server.ts",
     "ex10": "tsx Exercicio10/server.ts",
+    "ex11-12": "tsx Exercicio11-12/server.ts",
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest"
