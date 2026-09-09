@@ -1,0 +1,27 @@
+{
+  "name": "modulo2-debugging",
+  "version": "1.0.0",
+  "description": "Modulo 2 - Tecnicas de Debugging em Node.js e TypeScript",
+  "type": "module",
+  "scripts": {
+    "ex1": "tsx Exercicio1/index.ts",
+    "ex1:debug": "tsx Exercicio1/debug.ts",
+    "ex2": "tsx Exercicio2/index.ts",
+    "ex3": "tsx Exercicio3/index.ts",
+    "build": "tsc --noEmit"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@typescript-eslint/parser": "^8.67.0",
+    "eslint": "^10.8.1",
+    "globals": "^17.11.0",
+    "jiti": "^2.7.0",
+    "tsx": "^4.19.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0"
+  },
+  "dependencies": {}
+}
