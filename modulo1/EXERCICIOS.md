@@ -11,6 +11,11 @@
 - [Exercício 4.1: Generics](#exercício-41-generics)
 - [Exercício 5.1: API REST com Express](#exercício-51-api-rest-com-express)
 - [Exercício 6.1: Consumo de API e Filtros](#exercício-61-consumo-de-api-e-filtros)
+- [Exercício 7: Middleware com Tipagem](#exercício-7-middleware-com-tipagem)
+- [Exercício 8: Classe UserService](#exercício-8-classe-userservice)
+- [Exercício 9: Erros Tipados (AppError)](#exercício-9-erros-tipados-apperror)
+- [Exercício 10: CRUD de Produtos](#exercício-10-crud-de-produtos)
+- [Exercício 11 e 12: RequestHandler e Repository](#exercício-11-e-12-requesthandler-e-repository)
 
 ---
 
@@ -583,6 +588,118 @@ Total de países carregados: 250
 
 ---
 
+## Exercício 7: Middleware com Tipagem
+
+### Objetivo
+
+Criar um middleware com a tipagem do Express `(req: Request, res: Response, next: NextFunction)` que registra cada requisicao e libera o fluxo com `next()`.
+
+### Arquivos
+
+- `Exercicio7/middlewares/logger.middleware.ts` — funcao loggerMiddleware tipada
+- `Exercicio7/server.ts` — middleware registrado com `app.use` antes das rotas
+
+### Como Executar
+
+```bash
+npm run ex7
+```
+
+---
+
+## Exercício 8: Classe UserService
+
+### Objetivo
+
+Centralizar o CRUD de usuarios em uma classe com lista privada. A rota cuida do HTTP; o servico manipula os dados.
+
+### Arquivos
+
+- `Exercicio8/services/user.service.ts` — classe UserService (getAll, getById, create, update com Partial, delete)
+- `Exercicio8/server.ts` — rotas usam apenas o servico e validam o corpo em runtime
+
+### Como Executar
+
+```bash
+npm run ex8
+```
+
+---
+
+## Exercício 9: Erros Tipados (AppError)
+
+### Objetivo
+
+Distinguir erro esperado da aplicacao de erro inesperado, com um AppError que transporta o codigo HTTP e um middleware global de erros.
+
+### Arquivos
+
+- `Exercicio9/errors/app.error.ts` — classe AppError extends Error com statusCode public readonly
+- `Exercicio9/middlewares/error.middleware.ts` — middleware global com ErrorRequestHandler (4 parametros), registrado depois das rotas
+- `Exercicio9/server.ts` — rotas lancam AppError em vez de espalhar res.status()
+
+### Comportamento
+
+- Instancia de AppError -> responde com statusCode e message
+- Erro inesperado -> 500 com mensagem generica (sem stack trace)
+
+### Como Executar
+
+```bash
+npm run ex9
+```
+
+---
+
+## Exercício 10: CRUD de Produtos
+
+### Objetivo
+
+Aplicar regras de negocio e validacao em runtime no CRUD de produtos, com a rota cuidando apenas do HTTP e o ProductService das regras.
+
+### Regras de negocio
+
+- Nome precisa ter no minimo 3 caracteres (apos trim)
+- Preco nao pode ser negativo nem NaN (zero e aceito)
+- ID gerado pela aplicacao, nunca pelo cliente
+- PUT pode atualizar apenas os campos enviados
+
+### Como Executar
+
+```bash
+npm run ex10
+```
+
+---
+
+## Exercício 11 e 12: RequestHandler e Repository
+
+### Objetivo
+
+Tipar params, resposta, body e query de cada rota com `RequestHandler<Params, ResBody, ReqBody, Query>` e introduzir o Repository como abstracao de persistencia em arquivo JSON (modulo 1).
+
+### Arquivos
+
+- `Exercicio11-12/types.ts` — IUser, IProduct e contratos das rotas (IdParams, CreateBody, UpdateBody, DeleteUserResponse, EmptyParams, EmptyQuery)
+- `Exercicio11-12/repositories/` — IUserRepository/IProductRepository (metodos com Promise) e UserRepository/ProductRepository gravando em `data/*.json`
+- `Exercicio11-12/services/` — UserService/ProductService com injecao de dependencia (recebem o repository, nao o criam)
+- `Exercicio11-12/data/users.json` e `data/products.json` — persistencia real (sobrevive ao restart)
+- `Exercicio11-12/server.ts` — handlers tipados declarados separadamente; composicao das dependencias feita uma vez na inicializacao
+
+### Regras mantidas
+
+- Regras de negocio e validacao em runtime continuam no Service (nome 3+, preco >= 0)
+- Repository gera o ID, esconde o JSON/fs.promises e NAO decide status HTTP
+- Repository/Service nao conhecem req/res nem detalhes do arquivo
+
+### Como Executar
+
+```bash
+npm run ex11-12
+```
+
+---
+
 ## Conceitos Abordados
 
 | Exercicio | Conceitos                                           |
@@ -596,32 +713,52 @@ Total de países carregados: 250
 | 4.1       | Generics, constraints, reutilizacao de tipos        |
 | 5.1       | API REST, Express, rotas HTTP, validacao            |
 | 6.1       | Fetch API, async/await, interfaces, filtros         |
+| 7         | Middleware Express, tipagem (req, res, next)        |
+| 8         | Classes, encapsulamento, camada de servico, Partial |
+| 9         | Erros esperados vs inesperados, AppError, ErrorRequestHandler |
+| 10        | Regras de negocio, validacao em runtime, CRUD       |
+| 11 e 12   | RequestHandler tipado, repository, persistencia JSON, injecao de dependencia |
 
 ---
 
 ## Como Executar
 
+Todos os comandos abaixo devem ser executados a partir de `modulo1/`.
+
 ```bash
-# Instalar dependencias
+# Instalar dependencias (uma vez)
 npm install
 
-# Rodar os exercicios
-npm run dev
+# Rodar os exercicios 1 a 4 (script TS)
+npm run ex1
+npm run ex2
+npm run ex3
+npm run ex4
 
-# Rodar a API REST
+# Rodar a API REST do Exercicio 5 (Executavel "server")
 npm run server
 
-# Verificar qualidade do codigo
-npx eslint src/
+# Rodar o frontend do Exercicio 6 (compila e abre a pagina)
+npm run ex6
+
+# Rodar os servidores dos exercicios 7 a 12
+npm run ex7
+npm run ex8
+npm run ex9
+npm run ex10
+npm run ex11-12
+
+# Verificar qualidade do codigo (todos os exercicios)
+npx eslint Exercicio1 Exercicio2 Exercicio3 Exercicio4 Exercicio5 Exercicio6 Exercicio7 Exercicio8 Exercicio9 Exercicio10 Exercicio11-12
 
 # Corrigir automaticamente
-npx eslint src/ --fix
+npx eslint Exercicio1 Exercicio2 Exercicio3 Exercicio4 Exercicio5 Exercicio6 Exercicio7 Exercicio8 Exercicio9 Exercicio10 Exercicio11-12 --fix
 
-# Compilar TypeScript
+# Compilar TypeScript (sem emitir, validacao de tipos)
+npx tsc --noEmit
+
+# Compilar com emissao
 npm run build
-
-# Rodar testes
-npm test
 ```
 
 ---
@@ -630,20 +767,26 @@ npm test
 
 ```
 TypeScript/
-├── src/
-│   ├── index.ts        (Exercicios 1.1 a 4.1 e 6.1)
-│   ├── server.ts       (Exercicio 5.1 - API REST)
-│   ├── types.ts        (Interfaces compartilhadas)
-│   ├── api.ts          (Exercicio 6.1 - busca de API)
-│   ├── filters.ts      (Exercicio 6.1 - pesquisas e filtros)
-│   ├── data.ts         (Dados reutilizaveis)
-│   └── data.test.ts    (Testes do data.ts)
-├── dist/               (Compilado JavaScript)
-├── node_modules/
-├── package.json
-├── tsconfig.json
-├── eslint.config.mts
-└── EXERCICIOS.md       (Este arquivo)
+├── node_modules/              (dependencias compartilhadas, na raiz)
+├── .gitignore
+└── modulo1/                   (Modulo 1 - todos os arquivos desta entrega)
+    ├── Exercicio1/            (Setup TypeScript + ESLint)
+    ├── Exercicio2/            (Tipos primitivos e funcoes tipadas)
+    ├── Exercicio3/            (Interfaces e tipos personalizados)
+    ├── Exercicio4/            (Generics)
+    ├── Exercicio5/            (API REST com Express - /users)
+    ├── Exercicio6/            (Consumo de API e filtros + frontend)
+    ├── Exercicio7/            (Middleware com tipagem)
+    ├── Exercicio8/            (Classe UserService)
+    ├── Exercicio9/            (AppError e middleware global de erros)
+    ├── Exercicio10/           (CRUD de produtos)
+    ├── Exercicio11-12/        (RequestHandler tipado + Repository JSON)
+    ├── package.json
+    ├── package-lock.json
+    ├── tsconfig.json
+    ├── eslint.config.mts
+    ├── README.md
+    └── EXERCICIOS.md          (Este arquivo)
 ```
 
 ---
@@ -659,6 +802,11 @@ TypeScript/
 - Exercicio 4.1: Completo
 - Exercicio 5.1: Completo
 - Exercicio 6.1: Completo
+- Exercicio 7: Completo
+- Exercicio 8: Completo
+- Exercicio 9: Completo
+- Exercicio 10: Completo
+- Exercicio 11 e 12: Completo
 
 ---
 
