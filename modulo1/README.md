@@ -440,22 +440,28 @@ npm run build
 
 ```
 TypeScript/
-├── Exercicio1/              (Setup TypeScript + ESLint)
-├── Exercicio2/              (Tipos primitivos e funcoes tipadas)
-├── Exercicio3/              (Interfaces e tipos personalizados)
-├── Exercicio4/              (Generics)
-├── Exercicio5/              (API REST com Express - /users)
-├── Exercicio6/              (Consumo de API e filtros + frontend)
-├── Exercicio7/              (Middleware com tipagem)
-├── Exercicio8/              (Classe UserService)
-├── Exercicio9/              (AppError e middleware global de erros)
-├── Exercicio10/             (CRUD de produtos)
-├── Exercicio11-12/          (RequestHandler tipado + Repository JSON)
-├── node_modules/
-├── package.json
-├── tsconfig.json
-├── eslint.config.mts
-└── README.md                (Este arquivo)
+├── node_modules/              (dependencias compartilhadas, na raiz)
+├── .gitignore
+└── modulo1/                   (Modulo 1 - todos os arquivos desta entrega)
+    ├── Exercicio1/            (Setup TypeScript + ESLint)
+    ├── Exercicio2/            (Tipos primitivos e funcoes tipadas)
+    ├── Exercicio3/            (Interfaces e tipos personalizados)
+    ├── Exercicio4/            (Generics)
+    ├── Exercicio5/            (API REST com Express - /users)
+    ├── Exercicio6/            (Consumo de API e filtros + frontend)
+    ├── Exercicio7/            (Middleware com tipagem)
+    ├── Exercicio8/            (Classe UserService)
+    ├── Exercicio9/            (AppError e middleware global de erros)
+    ├── Exercicio10/           (CRUD de produtos)
+    ├── Exercicio11-12/        (RequestHandler tipado + Repository JSON)
+    ├── package.json
+    ├── package-lock.json
+    ├── tsconfig.json
+    ├── eslint.config.mts
+    ├── EXERCICIOS.md
+    └── README.md              (Este arquivo)
+
+Obs.: rode os comandos (npm run exN, npx tsc --noEmit, npx eslint ...) a partir de modulo1/.
 ```
 
 ---
