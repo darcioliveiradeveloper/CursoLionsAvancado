@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "ex1": "tsx Exercicio1/index.ts",
-    "ex1:debug": "tsx Exercicio1/debug.ts",
     "ex2": "tsx Exercicio2/index.ts",
     "ex3": "tsx Exercicio3/index.ts",
     "build": "tsc --noEmit"
@@ -19,9 +18,9 @@
     "eslint": "^10.8.1",
     "globals": "^17.11.0",
     "jiti": "^2.7.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0"
-  },
-  "dependencies": {}
+  }
 }
